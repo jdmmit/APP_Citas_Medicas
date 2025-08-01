@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+# BASE_DIR es la ruta base del proyecto, se utiliza para construir rutas relativas
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -28,8 +29,8 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-# Application definition
-
+# Definición de aplicaciones instaladas
+# Lista de aplicaciones Django que están habilitadas en este proyecto
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -37,9 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'usuarios',
+    'usuarios',  # Nuestra aplicación personalizada para gestión de usuarios
 ]
 
+# Middleware - Componentes que procesan las solicitudes/respuestas
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -50,8 +52,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'citas_medicas.urls'
+# Configuración principal de URLs
+ROOT_URLCONF = 'citas_medicas.urls'  # Módulo que contiene las definiciones de URL raíz
 
+# Configuración de plantillas
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -67,12 +71,13 @@ TEMPLATES = [
     },
 ]
 
+# Configuración de la aplicación WSGI para despliegue
 WSGI_APPLICATION = 'citas_medicas.wsgi.application'
 
 
-# Database
+# Configuración de la base de datos
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
+# Se utiliza SQLite como base de datos por defecto para desarrollo
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -81,9 +86,9 @@ DATABASES = {
 }
 
 
-# Password validation
+# Validadores de contraseñas
+# Configuración para garantizar contraseñas seguras
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -100,24 +105,33 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
+# Configuración de internacionalización
+# Permite la traducción y localización de la aplicación
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en-us'  # Código de idioma predeterminado
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'UTC'  # Zona horaria predeterminada
 
-USE_I18N = True
+USE_I18N = True  # Habilita el sistema de internacionalización
 
-USE_TZ = True
+USE_TZ = True  # Habilita el soporte de zona horaria
 
 
-# Static files (CSS, JavaScript, Images)
+# Archivos estáticos (CSS, JavaScript, Imágenes)
+# Configuración para servir archivos estáticos
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = 'static/'  # URL base para acceder a los archivos estáticos
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # Directorio donde se recopilan los archivos estáticos para producción
 
-# Default primary key field type
+# Directorios adicionales donde Django buscará archivos estáticos
+STATICFILES_DIRS = [
+    BASE_DIR / 'usuarios/static',  # Archivos estáticos de la aplicación usuarios
+]
+
+# Tipo de campo predeterminado para claves primarias
+# Define el tipo de campo automático para las claves primarias en los modelos
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'  # Utiliza BigAutoField como tipo predeterminado
