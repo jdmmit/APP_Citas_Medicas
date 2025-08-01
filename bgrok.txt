@@ -1,1 +1,0 @@
-ngrok config add-authtoken 30eyOnAtFhlRgRL0R3KV1d7BiDS_7uFPn2FmReF9eDR1nN17q
