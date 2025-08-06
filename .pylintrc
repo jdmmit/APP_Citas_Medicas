@@ -1,0 +1,16 @@
+[MASTER]
+load-plugins=pylint_django
+django-settings-module=APP_Citas_Medicas.settings
+
+[FORMAT]
+max-line-length=88
+
+[MESSAGES CONTROL]
+disable=C0114,C0115,C0116,R0903,W0613
+
+[DESIGN]
+max-args=7
+max-locals=15
+max-returns=6
+max-branches=12
+max-statements=50
