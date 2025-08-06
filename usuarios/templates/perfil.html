@@ -1,10 +1,173 @@
 {% extends "base.html" %}
 
+{% block title %}Mi Perfil - Citas Médicas{% endblock %}
+
 {% block content %}
-<!-- Contenido principal de la página de perfil de usuario -->
-<h1 class="text-center mb-4">Perfil de Usuario</h1>
-<p class="mb-4">Bienvenido a tu perfil. Aquí puedes ver y editar tu información personal.</p>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0">
+                        <i class="fas fa-user me-2"></i>
+                        Mi Perfil
+                    </h2>
+                </div>
 
-<!-- Aquí se incluiría la información del perfil cuando se implemente -->
+                <div class="card-body">
+                    <!-- Mostrar mensajes -->
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
 
+                    {% if usuario %}
+                    <!-- Información Personal -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h4 class="text-primary border-bottom pb-2">
+                                <i class="fas fa-user me-2"></i>Información Personal
+                            </h4>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <strong>Nombre Completo:</strong>
+                            <p>{{ usuario.get_full_name }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <strong>Edad:</strong>
+                            <p>{{ usuario.get_edad }} años</p>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <strong>Documento:</strong>
+                            <p>{{ usuario.get_tipo_documento_display }} - {{ usuario.cedula }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <strong>Fecha de Nacimiento:</strong>
+                            <p>{{ usuario.fecha_nacimiento|date:"d/m/Y" }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Información de Contacto -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h4 class="text-primary border-bottom pb-2">
+                                <i class="fas fa-envelope me-2"></i>Información de Contacto
+                            </h4>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <strong>Email:</strong>
+                            <p>{{ usuario.email }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <strong>Teléfono:</strong>
+                            <p>{{ usuario.telefono }}</p>
+                        </div>
+                    </div>
+
+                    {% if usuario.direccion %}
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <strong>Dirección:</strong>
+                            <p>{{ usuario.direccion }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Información Médica -->
+                    {% if usuario.tipo_sangre or usuario.alergias or usuario.medicamentos_actuales %}
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h4 class="text-primary border-bottom pb-2">
+                                <i class="fas fa-heartbeat me-2"></i>Información Médica
+                            </h4>
+                        </div>
+                    </div>
+
+                    {% if usuario.tipo_sangre %}
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <strong>Tipo de Sangre:</strong>
+                            <p>{{ usuario.get_tipo_sangre_display }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if usuario.alergias %}
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <strong>Alergias:</strong>
+                            <p>{{ usuario.alergias }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if usuario.medicamentos_actuales %}
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <strong>Medicamentos Actuales:</strong>
+                            <p>{{ usuario.medicamentos_actuales }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endif %}
+
+                    <!-- Contacto de Emergencia -->
+                    {% if usuario.contacto_emergencia_nombre %}
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h4 class="text-primary border-bottom pb-2">
+                                <i class="fas fa-phone-alt me-2"></i>Contacto de Emergencia
+                            </h4>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <strong>Contacto:</strong>
+                            <p>{{ usuario.get_informacion_contacto_emergencia }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Botones de acción -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="d-flex flex-wrap gap-2">
+                                <a href="{% url 'editar_perfil' %}" class="btn btn-primary">
+                                    <i class="fas fa-edit me-2"></i>Editar Perfil
+                                </a>
+                                <a href="{% url 'cambiar_contraseña' %}" class="btn btn-secondary">
+                                    <i class="fas fa-key me-2"></i>Cambiar Contraseña
+                                </a>
+                                <a href="{% url 'notificaciones' %}" class="btn btn-info">
+                                    <i class="fas fa-bell me-2"></i>Notificaciones
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% else %}
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        No se pudo cargar la información del perfil.
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
